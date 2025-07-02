@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 type Props = {
   name: string;
-  value: string;
+  defaultValue: string;
   label?: string;
   placeholder?: string;
   required?: boolean;
@@ -16,7 +16,7 @@ function getRandomDigits() {
 
 export const TextField: React.FC<Props> = ({
   name,
-  value,
+  defaultValue,
   label = name,
   placeholder = `Enter ${label}`,
   required = false,
@@ -27,7 +27,7 @@ export const TextField: React.FC<Props> = ({
 
   // To show errors only if the field was touched (onBlur)
   const [touched, setTouched] = useState(false);
-  const hasError = touched && required && !value;
+  const hasError = touched && required && !defaultValue;
 
   return (
     <div className="field">
@@ -44,7 +44,7 @@ export const TextField: React.FC<Props> = ({
             'is-danger': hasError,
           })}
           placeholder={placeholder}
-          value={value}
+          defaultValue={defaultValue}
           onChange={event => onChange(event.target.value)}
           onBlur={() => setTouched(true)}
         />
