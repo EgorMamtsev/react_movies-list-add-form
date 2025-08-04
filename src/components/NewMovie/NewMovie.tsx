@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField } from '../TextField';
 import { Movie } from '../../types/Movie';
 type Props = {
@@ -8,16 +8,35 @@ type Props = {
 export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
   // Increase the count after successful form submission
   // to reset touched status of all the `Field`s
-  const [count] = useState(0);
+  const [count, setCount] = useState(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imgUrl, setImageUrl] = useState('');
   const [imdbUrl, setImdbUrl] = useState('');
   const [imdbId, setImbdId] = useState('');
 
+  const [buttonDisable, setButtonDisable] = useState(true);
+
+  useEffect(() => {
+    const allFieldsFilled =
+      title.trim() !== '' &&
+      imgUrl.trim() !== '' &&
+      imdbUrl.trim() !== '' &&
+      imdbId.trim() !== '';
+
+    setButtonDisable(!allFieldsFilled);
+  }, [title, imgUrl, imdbUrl, imdbId]);
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     onSubmit({ title, description, imgUrl, imdbUrl, imdbId });
+
+    setCount(prev => prev + 1);
+    setTitle('');
+    setDescription('');
+    setImageUrl('');
+    setImdbUrl('');
+    setImbdId('');
   };
 
   return (
@@ -27,35 +46,40 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
       <TextField
         name="title"
         label="Title"
-        defaultValue=""
-        onChange={value => setTitle(value)}
+        defaultValue={title}
+        required
+        onChange={value => {
+          setTitle(value);
+        }}
       />
-
       <TextField
         name="description"
         label="Description"
-        defaultValue=""
+        defaultValue={description}
         onChange={value => setDescription(value)}
       />
 
       <TextField
         name="imgUrl"
         label="Image URL"
-        defaultValue=""
+        defaultValue={imgUrl}
+        required
         onChange={value => setImageUrl(value)}
       />
 
       <TextField
         name="imdbUrl"
         label="Imdb URL"
-        defaultValue=""
+        defaultValue={imdbUrl}
+        required
         onChange={value => setImdbUrl(value)}
       />
 
       <TextField
         name="imdbId"
         label="Imdb ID"
-        defaultValue=""
+        defaultValue={imdbId}
+        required
         onChange={value => setImbdId(value)}
       />
 
@@ -65,6 +89,7 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
             type="submit"
             data-cy="submit-button"
             className="button is-link"
+            disabled={buttonDisable}
           >
             Add
           </button>
