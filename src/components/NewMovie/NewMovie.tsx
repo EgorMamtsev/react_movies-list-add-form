@@ -13,7 +13,7 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
   const [description, setDescription] = useState('');
   const [imgUrl, setImageUrl] = useState('');
   const [imdbUrl, setImdbUrl] = useState('');
-  const [imdbId, setImbdId] = useState('');
+  const [imdbId, setImdbId] = useState('');
 
   const [buttonDisable, setButtonDisable] = useState(true);
 
@@ -36,7 +36,7 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
     setDescription('');
     setImageUrl('');
     setImdbUrl('');
-    setImbdId('');
+    setImdbId('');
   };
 
   return (
@@ -46,7 +46,7 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
       <TextField
         name="title"
         label="Title"
-        defaultValue={title}
+        value={title}
         required
         onChange={value => {
           setTitle(value);
@@ -55,14 +55,14 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
       <TextField
         name="description"
         label="Description"
-        defaultValue={description}
+        value={description}
         onChange={value => setDescription(value)}
       />
 
       <TextField
         name="imgUrl"
         label="Image URL"
-        defaultValue={imgUrl}
+        value={imgUrl}
         required
         onChange={value => setImageUrl(value)}
       />
@@ -70,7 +70,7 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
       <TextField
         name="imdbUrl"
         label="Imdb URL"
-        defaultValue={imdbUrl}
+        value={imdbUrl}
         required
         onChange={value => setImdbUrl(value)}
       />
@@ -78,9 +78,9 @@ export const NewMovie: React.FC<Props> = ({ onSubmit }) => {
       <TextField
         name="imdbId"
         label="Imdb ID"
-        defaultValue={imdbId}
+        value={imdbId}
         required
-        onChange={value => setImbdId(value)}
+        onChange={value => setImdbId(value)}
       />
 
       <div className="field is-grouped">
